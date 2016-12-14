@@ -1,1 +1,1 @@
-copy ..\SystemFiles\*.* %SystemFiles%
+copy .\SystemFiles\*.* %SystemFiles%
