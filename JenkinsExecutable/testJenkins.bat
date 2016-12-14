@@ -1,1 +1,1 @@
-Running from execution folder
+echo Running from execution folder
