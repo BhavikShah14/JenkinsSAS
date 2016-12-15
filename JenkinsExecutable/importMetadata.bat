@@ -1,1 +1,1 @@
-%ImportPackagePath%\ImportPackage -profile "%PROFILE" -package ".\Metadata\*.spk" target / -includeACL
+%ImportPackagePath%\ImportPackage -profile "%PROFILE" -package ".\Metadata\*.spk" -target / -includeACL
