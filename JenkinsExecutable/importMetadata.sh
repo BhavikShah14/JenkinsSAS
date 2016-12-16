@@ -1,1 +1,1 @@
-${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "Metadata/*.spk" -target / -includeACL -disableX11
+${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "Metadata/Jenkins.spk" -target / -includeACL -disableX11
