@@ -1,1 +1,1 @@
-cp ./SystemFiles/*.* %SystemFiles%
+cp ./SystemFiles/*.* ${SystemFiles}
