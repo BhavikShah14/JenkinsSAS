@@ -28,29 +28,29 @@ done
 #User Groups spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
 #Users spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
 #Servers spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
 #Libraries spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*libraries*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
 for i in $(find $(dirname $(readlink -f $0))/.. -name  "*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
