@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-for i in $(find $(dirname $(readlink -f $0))/Metadata/.. -name "*.spk")
+for i in $(find $(dirname $(readlink -f $0))/.. -name "*.spk")
 do
 	unzip -o "$i" -d "$i""d"
 	for j in $(find "$i""d" -name "*.spk")
