@@ -1,4 +1,4 @@
-#! Explode the spk into a folder with same name as the spk but with extension .spkd
+#Explode the spk into a folder with same name as the spk but with extension .spkd
 #! /usr/bin/env bash
 
 for i in $(find $(dirname $(readlink -f $0))/.. -name "*.spk")
