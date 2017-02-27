@@ -15,9 +15,10 @@ done
 #1 Roles
 #2 User Groups
 #3 Users
-#4 Servers
-#5 Libraries if separate spk created
-#6 All other spks
+#4 ACT's
+#5 Servers
+#6 Libraries if separate spk created
+#7 All other spks
 
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
@@ -33,6 +34,12 @@ done
 
 #Users spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+done
+
+#ACT spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
