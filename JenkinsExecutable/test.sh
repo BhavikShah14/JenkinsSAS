@@ -1,5 +1,5 @@
 #!/bin/bash
-file = /Metadata/environmentProperties.csv
+file = Metadata/environmentProperties.csv
 IFS=','
 read -a headers
 while read -a line; do
