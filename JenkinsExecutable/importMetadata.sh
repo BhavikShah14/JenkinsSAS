@@ -10,4 +10,8 @@ do
 	done
 done
 
-${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "Metadata/Jenkins.spk" -target / -includeACL -disableX11
+#Deploy all spk's
+for i in $(find $(dirname $(readlink -f $0))/.. -name "*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+done
