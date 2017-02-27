@@ -22,7 +22,7 @@ done
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
 done
 
 #User Groups spk
