@@ -1,3 +1,4 @@
+import util/exception
 #Explode the spk into a folder with same name as the spk but with extension .spkd
 #! /usr/bin/env bash
 
@@ -44,7 +45,7 @@ done
 
 for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop -noexecute
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 done
 
 #Roles spk
