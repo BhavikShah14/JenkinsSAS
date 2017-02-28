@@ -44,7 +44,7 @@ done
 
 for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop -noexecute
 done
 
 #Roles spk
