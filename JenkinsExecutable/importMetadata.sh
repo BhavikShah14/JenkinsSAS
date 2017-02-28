@@ -1,3 +1,4 @@
+source "$( cd "${BASH_SOURCE[0]%/*}" && pwd )/lib/oo-bootstrap.sh"
 import util/exception
 #Explode the spk into a folder with same name as the spk but with extension .spkd
 #! /usr/bin/env bash
