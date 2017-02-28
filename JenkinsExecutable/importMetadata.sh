@@ -41,6 +41,12 @@ done
 #6 Libraries if separate spk created
 #7 All other spks
 
+
+for i in $(find $(dirname $(readlink -f $0))/.. -name  "*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+done
+
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
@@ -77,8 +83,4 @@ do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
-for i in $(find $(dirname $(readlink -f $0))/.. -name  "*.spk")
-do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
-done
 
