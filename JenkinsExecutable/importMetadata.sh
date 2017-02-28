@@ -23,10 +23,14 @@ do
 done
 
 #using sed to replace the files
-for i in ${key[@]};
+for file in $(find $(dirname $(readlink -f $0))/.. -iname "*.spk.subprop")
 do
-	sed -i -- s:"${key[i]}":"${value[i]}":g "../Metadata/Jenkins.spk.subprop"
+	for count in ${!key[@]}
+	do
+		sed -i -- s:"${key[count]}":"${value[count]}":g "$file"
+	done
 done
+
 
 #Deploy all spk's in the following order
 #1 Roles
