@@ -1,3 +1,4 @@
 dev,sit
 /usr/tmp/dev,/usr/tmp/sit
 /usr/tmp/test2,/usr/tmp/test3
+OwningFile.FilePath=/usr/tmp/test.csv,OwningFile.FilePath=/usr/tmp/test1.csv
