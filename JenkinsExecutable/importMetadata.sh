@@ -44,37 +44,37 @@ done
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 #User Groups spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 #Users spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 #ACT spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 #Servers spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 #Libraries spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*libraries*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
 
 for i in $(find $(dirname $(readlink -f $0))/.. -name  "*.spk")
