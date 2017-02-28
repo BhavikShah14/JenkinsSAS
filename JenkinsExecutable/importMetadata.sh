@@ -25,7 +25,7 @@ done
 #using sed to replace the files
 for i in ${key[@]};
 do
-	sed -i -- s:"${key[i]}":"${value[i]}":g "../Metadata/Jenkins.spk.subprop"
+	sed -i -- s:"${key[i]}":"${value[i]}" "../Metadata/Jenkins.spk.subprop"
 done
 
 #Deploy all spk's in the following order
