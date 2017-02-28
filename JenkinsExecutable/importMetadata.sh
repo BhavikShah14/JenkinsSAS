@@ -1,4 +1,4 @@
-
+source 'exception.sh'
 #Explode the spk into a folder with same name as the spk but with extension .spkd
 
 
