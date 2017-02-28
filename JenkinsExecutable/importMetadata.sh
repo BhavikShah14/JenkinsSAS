@@ -8,9 +8,25 @@ do
 	for j in $(find "$i""d" -name "*.subprop")
 	do
 		cp $j $i.subprop
+		chmod 775 $i.subprop
 	done
 done
 
+
+#Create a HASH for replacing the subprop files
+#Uses the environment properties file to find the replacement
+#determines the source of spk and the target of spk from the parameters source and target
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*environmentproperties*.csv")
+do
+	key=($(awk -v source=${source} -f createHash.awk ../Metadata/environmentProperties.csv ))
+	value=($(awk -v target=${target} -f createHash.awk ../Metadata/environmentProperties.csv ))
+done
+
+#using sed to replace the files
+for i in ${key[@]};
+do
+	sed -i -- "s:${key[i]}:${value[i]}:g" "../Metadata/Jenkins.spk.subprop"
+done
 
 #Deploy all spk's in the following order
 #1 Roles
