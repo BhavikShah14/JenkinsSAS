@@ -42,7 +42,7 @@ done
 #7 All other spks
 
 
-for i in $(find $(dirname $(readlink -f $0))/.. -name  "*.spk" !-name "*roles*.spk")
+for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 done
