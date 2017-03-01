@@ -32,7 +32,8 @@ do
 	echo "Return Type"
 	echo $RC
 	#Check Return Code
-	if [ $RC -ne 0] ; then
+	if [ $RC -ne 0 ]
+	then
 		echo "Exiting from createHash with $RC"
 		exit $RC
 	fi
