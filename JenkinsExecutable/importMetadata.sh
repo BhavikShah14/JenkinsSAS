@@ -158,7 +158,7 @@ done
 # Deploy all other spk except for the ones already deployed in the order above
 for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*servers*.spk" ! -iname "*ACT*.spk" ! -iname "*users*.spk" ! -iname "*usergroups*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target Jenkins2/ -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 	RC=$?
 			
 	error_check $RC "Failed to import $i"
