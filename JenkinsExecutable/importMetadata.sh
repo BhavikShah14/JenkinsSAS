@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
 #Error check function
+#Parameter 1 is the error code
+#Parameter 2 is the error text
 function error_check 
 {
 	#Check Return Code
@@ -28,12 +30,7 @@ do
 	done
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Exiting from Exploding SPK  with $RC ***"
-		exit $RC
-	fi
+	error_check $RC "Exiting from explode spk for $i"
 done
 echo
 echo
@@ -57,12 +54,7 @@ do
 	value=($(awk -v target=${target} -f JenkinsExecutable/createHash.awk $i ))
 	RC=$?
 
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Exiting from createHash with $RC ***"
-		exit $RC
-	fi
+	error_check $RC "Exiting from Hash Lookup creation from environment Properties"
 done
 
 echo
@@ -85,12 +77,7 @@ do
 		sed -i -- s:"${key[count]}":"${value[count]}":g "$file"
 		RC=$?
 		
-		#Check Return Code
-		if [ $RC -ne 0 ]
-		then
-			echo "*** Exiting from Subprop update  with $RC ***"
-			exit $RC
-		fi
+		error_check $RC "Exiting from Subprop update for $i"
 	done
 done
 echo
@@ -116,92 +103,61 @@ echo "##########################################################################
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
+	error_check $RC "Failed to import $i"
 done
 
 #User Groups spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
+	error_check $RC "Failed to import $i"
 done
 
 #Users spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
-done
+	error_check $RC "Failed to import $i"
 
 #ACT spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
+	error_check $RC "Failed to import $i"
 done
 
 #Servers spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
+	error_check $RC "Failed to import $i"
 done
 
 #Libraries spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*libraries*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
-	#Check Return Code
-	if [ $RC -ne 0 ]
-	then
-		echo "*** Failed to import $i ***"
-		exit $RC
-	fi
+	error_check $RC "Failed to import $i"
 done
 
 
 # Deploy all other spk except for the ones already deployed in the order above
 for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*servers*.spk" ! -iname "*ACT*.spk" ! -iname "*users*.spk" ! -iname "*usergroups*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 	RC=$?
 			
 	error_check $RC "Failed to import $i"
