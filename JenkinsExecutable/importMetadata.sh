@@ -1,4 +1,15 @@
 #! /usr/bin/env bash
+
+#Error check function
+function error_check 
+{
+	#Check Return Code
+	if [ $1 -ne 0 ]
+	then
+		echo "*** $2 Error Code : $1 ***"
+		exit $1
+	fi
+}
 echo "##############################################################################################################################################################"
 echo "Start of SPK explode"
 echo "##############################################################################################################################################################"
@@ -97,15 +108,15 @@ echo "##########################################################################
 #1 Roles
 #2 User Groups
 #3 Users
-#4 ACT's
+#4 ACT's 
 #5 Servers
 #6 Libraries if separate spk created
 #7 All other spks
 
-
-for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk")
+#Roles spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
 			
 	#Check Return Code
@@ -116,40 +127,88 @@ do
 	fi
 done
 
-#Roles spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
-do
-	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
-done
-
 #User Groups spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 #Users spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 #ACT spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 #Servers spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 #Libraries spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*libraries*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 
+# Deploy all other spk except for the ones already deployed in the order above
+for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*servers*.spk" ! -iname "*ACT*.spk" ! -iname "*users*.spk" ! -iname "*usergroups*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	RC=$?
+			
+	error_check RC "Failed to import $i"
+done
+
+echo
+echo
+echo "##############################################################################################################################################################"
+echo "End of Deploying of Packages to Target Environment"
+echo "##############################################################################################################################################################"
