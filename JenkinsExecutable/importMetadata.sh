@@ -1,7 +1,9 @@
 #! /usr/bin/env bash
 echo "##############################################################################################################################################################"
 echo "Start of SPK explode"
-
+echo "##############################################################################################################################################################"
+echo
+echo
 #Explode the spk into a folder with same name as the spk but with extension .spkd
 
 for i in $(find $(dirname $(readlink -f $0))/.. -name "*.spk")
@@ -13,52 +15,84 @@ do
 		cp $j $i.subprop
 		chmod 775 $i.subprop
 	done
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Exiting from Exploding SPK  with $RC ***"
+		exit $RC
+	fi
 done
-
+echo
+echo
+echo "##############################################################################################################################################################"
 echo "End of SPK explode"
 echo "##############################################################################################################################################################"
-
+echo
+echo
 echo "##############################################################################################################################################################"
 echo "Start of lookup creation calling createHash.awk"
+echo "##############################################################################################################################################################"
+echo
+echo
 
 #Create a HASH for replacing the subprop files
 #Uses the environment properties file to find the replacement
 #determines the source of spk and the target of spk from the parameters source and target
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*environmentproperties*.csv")
 do
-	key=($(awk -v source=${source} -f JenkinsExecutable/createHash1.awk $i))
-	value=($(awk -v target=${target} -f JenkinsExecutable/createHash1.awk $i ))
+	key=($(awk -v source=${source} -f JenkinsExecutable/createHash.awk $i))
+	value=($(awk -v target=${target} -f JenkinsExecutable/createHash.awk $i ))
 	RC=$?
-	echo "Return Type"
-	echo $RC
+
 	#Check Return Code
 	if [ $RC -ne 0 ]
 	then
-		echo "Exiting from createHash with $RC"
+		echo "*** Exiting from createHash with $RC ***"
 		exit $RC
 	fi
 done
 
-
-
+echo
+echo
+echo "##############################################################################################################################################################"
 echo "End of lookup array creation from environmentproperties"
 echo "##############################################################################################################################################################"
-
+echo
+echo
 echo "##############################################################################################################################################################"
 echo "Start of updating subprop files with target values"
-
+echo "##############################################################################################################################################################"
+echo
+echo
 #using sed to replace the files
 for file in $(find $(dirname $(readlink -f $0))/.. -iname "*.spk.subprop")
 do
 	for count in ${!key[@]}
 	do
 		sed -i -- s:"${key[count]}":"${value[count]}":g "$file"
+		RC=$?
+		
+		#Check Return Code
+		if [ $RC -ne 0 ]
+		then
+			echo "*** Exiting from Subprop update  with $RC ***"
+			exit $RC
+		fi
 	done
 done
-
+echo
+echo
+echo "##############################################################################################################################################################"
 echo "End of subprop file update"
 echo "##############################################################################################################################################################"
 
+echo
+echo
+echo "##############################################################################################################################################################"
+echo "Start of Deploying of Packages to Target Environment"
+echo "##############################################################################################################################################################"
 #Deploy all spk's in the following order
 #1 Roles
 #2 User Groups
@@ -72,6 +106,14 @@ echo "##########################################################################
 for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	RC=$?
+			
+	#Check Return Code
+	if [ $RC -ne 0 ]
+	then
+		echo "*** Failed to import $i ***"
+		exit $RC
+	fi
 done
 
 #Roles spk
