@@ -32,8 +32,8 @@ do
 	
 	#Check Return Code
 	if [ $RC -ne 0] ; then
-	echo
-	exit $RC
+		echo "Exiting from createHash with $RC"
+		exit $RC
 	fi
 done
 
