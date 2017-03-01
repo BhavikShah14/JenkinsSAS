@@ -29,7 +29,8 @@ do
 	key=($(awk -v source=${source} -f JenkinsExecutable/createHash1.awk $i))
 	value=($(awk -v target=${target} -f JenkinsExecutable/createHash1.awk $i ))
 	RC=$?
-	
+	echo "Return Type"
+	echo $RC
 	#Check Return Code
 	if [ $RC -ne 0] ; then
 		echo "Exiting from createHash with $RC"
