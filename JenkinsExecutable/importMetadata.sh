@@ -1,5 +1,5 @@
-
-echo ##############################################################################################################################################################
+#! /usr/bin/env bash
+echo "##############################################################################################################################################################"
 echo "Start of SPK explode"
 
 #Explode the spk into a folder with same name as the spk but with extension .spkd
@@ -16,16 +16,34 @@ do
 done
 
 echo "End of SPK explode"
-echo ##############################################################################################################################################################
+echo "##############################################################################################################################################################"
+
+echo "##############################################################################################################################################################"
+echo "Start of lookup creation calling createHash.awk"
 
 #Create a HASH for replacing the subprop files
 #Uses the environment properties file to find the replacement
 #determines the source of spk and the target of spk from the parameters source and target
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*environmentproperties*.csv")
 do
-	key=($(awk -v source=${source} -f JenkinsExecutable/createHash.awk $i))
-	value=($(awk -v target=${target} -f JenkinsExecutable/createHash.awk $i ))
+	key=($(awk -v source=${source} -f JenkinsExecutable/createHash1.awk $i))
+	value=($(awk -v target=${target} -f JenkinsExecutable/createHash1.awk $i ))
+	RC=$?
+	
+	#Check Return Code
+	if [ $RC -ne 0] ; then
+	echo
+	exit $RC
+	fi
 done
+
+
+
+echo "End of lookup array creation from environmentproperties"
+echo "##############################################################################################################################################################"
+
+echo "##############################################################################################################################################################"
+echo "Start of updating subprop files with target values"
 
 #using sed to replace the files
 for file in $(find $(dirname $(readlink -f $0))/.. -iname "*.spk.subprop")
@@ -36,6 +54,8 @@ do
 	done
 done
 
+echo "End of subprop file update"
+echo "##############################################################################################################################################################"
 
 #Deploy all spk's in the following order
 #1 Roles
