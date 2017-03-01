@@ -204,7 +204,7 @@ do
 	${ImportPackagePath}/ImportPackage -profile "SASAdmin" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 	RC=$?
 			
-	error_check RC "Failed to import $i"
+	error_check $RC "Failed to import $i"
 done
 
 echo
