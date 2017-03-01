@@ -125,6 +125,7 @@ do
 	RC=$?
 			
 	error_check $RC "Failed to import $i"
+done
 
 #ACT spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
