@@ -157,7 +157,7 @@ done
 
 
 # Deploy all other spk except for the ones already deployed in the order above
-for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*server*.spk" ! -iname "*ACT*.spk" ! -iname "*user*.spk" ! -iname "*usergroup*.spk" ! -path "*spkd")
+for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*server*.spk" ! -iname "*ACT*.spk" ! -iname "*user*.spk" ! -iname "*usergroup*.spk" ! -path "*spkd*")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 	RC=$?
