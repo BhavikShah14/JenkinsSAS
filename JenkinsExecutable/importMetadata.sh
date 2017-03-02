@@ -93,16 +93,16 @@ echo "##########################################################################
 echo "Start of Deploying of Packages to Target Environment"
 echo "##############################################################################################################################################################"
 #Deploy all spk's in the following order
-#1 Roles
-#2 User Groups
+#1 User Groups
+#2 Roles
 #3 Users
 #4 ACT's 
 #5 Servers
 #6 Libraries if separate spk created
 #7 All other spks
 
-#Roles spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
+#User Groups spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
@@ -110,8 +110,8 @@ do
 	error_check $RC "Failed to import $i"
 done
 
-#User Groups spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
+#Roles spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
