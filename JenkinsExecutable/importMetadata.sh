@@ -157,8 +157,7 @@ done
 
 
 # Deploy all other spk except for the ones already deployed in the order above
-#To deal with spk within exploded spks the find command has maxdepth of 1
-for i in $(find "$(cd ..; pwd)" -maxdepth 1 -iname "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*server*.spk" ! -iname "*ACT*.spk" ! -iname "*user*.spk" ! -iname "*usergroup*.spk")
+for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*server*.spk" ! -iname "*ACT*.spk" ! -iname "*user*.spk" ! -iname "*usergroup*.spk" ! -path "*spkd")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
 	RC=$?
