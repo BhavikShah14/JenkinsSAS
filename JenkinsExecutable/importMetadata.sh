@@ -89,3 +89,84 @@ echo "##########################################################################
 echo
 echo
 
+echo "##############################################################################################################################################################"
+echo "Start of Deploying of Packages to Target Environment"
+echo "##############################################################################################################################################################"
+#Deploy all spk's in the following order
+#1 Roles
+#2 User Groups
+#3 Users
+#4 ACT's 
+#5 Servers
+#6 Libraries if separate spk created
+#7 All other spks
+
+#Roles spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+#User Groups spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+#Users spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+#ACT spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*ACT*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+#Servers spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+#Libraries spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*libraries*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+
+# Deploy all other spk except for the ones already deployed in the order above
+for i in $(find $(dirname $(readlink -f $0))/.. -iname  "*.spk" ! -iname "*roles*.spk" ! -iname "*libraries*.spk" ! -iname "*servers*.spk" ! -iname "*ACT*.spk" ! -iname "*users*.spk" ! -iname "*usergroups*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop 
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
+echo
+echo
+echo "##############################################################################################################################################################"
+echo "End of Deploying of Packages to Target Environment"
+echo "##############################################################################################################################################################"

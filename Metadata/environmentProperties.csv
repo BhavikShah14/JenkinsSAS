@@ -1,4 +1,6 @@
 dev,sit
-/usr/tmp/dev,/usr/tmp/sit
-/usr/tmp/test2,/usr/tmp/test3
-OwningFile.FilePath=/usr/tmp/test.csv,OwningFile.FilePath=/usr/tmp/test1.csv
+DirPath=path=tsasaml,DirPath=path=sitsasaml
+Port=10051,Port=20051
+OwningFile.FilePath=/usr/tmp/test.csv,OwningFile.FilePath=/usr/tmp/sit/test.csv
+OwningFile.FilePath=/usr/tmp/test1.csv,OwningFile.FilePath=/usr/tmp/sit/test1.csv
+DeploymentDirectory[1].TargetDirectory=Batch Jobs,DeploymentDirectory[1].TargetDirectory=Batch Jobs SIT
