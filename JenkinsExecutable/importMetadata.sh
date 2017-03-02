@@ -138,7 +138,7 @@ do
 done
 
 #Servers spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*servers*.spk")
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*server*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
