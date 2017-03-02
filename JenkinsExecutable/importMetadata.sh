@@ -102,7 +102,7 @@ echo "##########################################################################
 #7 All other spks
 
 #User Groups spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroups*.spk")
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroup*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
