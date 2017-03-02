@@ -101,6 +101,15 @@ echo "##########################################################################
 #6 Libraries if separate spk created
 #7 All other spks
 
+#Users spk
+for i in $(find $(dirname $(readlink -f $0))/.. -iname "*user*.spk")
+do
+	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
+	RC=$?
+			
+	error_check $RC "Failed to import $i"
+done
+
 #User Groups spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*usergroup*.spk")
 do
@@ -112,15 +121,6 @@ done
 
 #Roles spk
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*roles*.spk")
-do
-	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
-	RC=$?
-			
-	error_check $RC "Failed to import $i"
-done
-
-#Users spk
-for i in $(find $(dirname $(readlink -f $0))/.. -iname "*users*.spk")
 do
 	${ImportPackagePath}/ImportPackage -profile "$profile" -package "$i" -target / -preservePaths -includeACL -disableX11 -subprop $i.subprop
 	RC=$?
