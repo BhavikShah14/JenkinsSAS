@@ -6,7 +6,7 @@
 function error_check 
 {
 	#Check Return Code
-	if [ $1 -ne 0 ]
+	if [ $1 -ne 0 or $1 ne 4]
 	then
 		echo "*** $2 Error Code : $1 ***"
 		exit $1
