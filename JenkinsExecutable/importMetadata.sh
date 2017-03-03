@@ -48,6 +48,8 @@ echo
 #Create a HASH for replacing the subprop files
 #Uses the environment properties file to find the replacement
 #determines the source of spk and the target of spk from the parameters source and target
+OIFS=$IFS
+IFS=","
 for i in $(find $(dirname $(readlink -f $0))/.. -iname "*environmentproperties*.csv")
 do
 	key=($(awk -v source=${source} -f JenkinsExecutable/createHash.awk $i))
@@ -56,7 +58,7 @@ do
 
 	error_check $RC "Exiting from Hash Lookup creation from environment Properties"
 done
-
+IFS=$OIFS
 echo
 echo
 echo "##############################################################################################################################################################"

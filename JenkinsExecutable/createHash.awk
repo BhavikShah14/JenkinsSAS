@@ -15,8 +15,7 @@ NR==1 {                                # Process header
 	next                           # Skip to next line
 }
 {                                      
-    sep=""   
-    j= NR-1                          # Set for leading separator
+    sep=""                             # Set for leading separator
     for (i=1;i<=NF;i++)  {              # For each field
         if (head[i] in field_src) {    # Test for current field is a source field
             printf "%s%s",sep,$i	# print the array to be captured in bash array
@@ -25,7 +24,7 @@ NR==1 {                                # Process header
             printf "%s%s",sep,$i	#print the value to be captured in bash array
     }
   }
-  printf "\n"
+  printf ","
 	
       
 }
